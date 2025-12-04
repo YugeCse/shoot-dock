@@ -1,0 +1,142 @@
+[gd_scene load_steps=19 format=3 uid="uid://dd6hagoroveru"]
+
+[ext_resource type="Script" uid="uid://bv5ubenhdnbpw" path="res://scenes/MainScene.gd" id="1_611at"]
+[ext_resource type="Texture2D" uid="uid://dh30q6mo3jicw" path="res://assets/images/bg_game.jpg" id="1_echbf"]
+[ext_resource type="Texture2D" uid="uid://wgugc6bbwhxd" path="res://assets/images/tree.png" id="2_c6dvc"]
+[ext_resource type="Texture2D" uid="uid://3t38iyv7yrx5" path="res://assets/images/grass.png" id="2_ibiss"]
+[ext_resource type="AudioStream" uid="uid://c1x10i2ykxhlg" path="res://assets/sounds/ds_shot.ogg" id="2_u1u68"]
+[ext_resource type="AudioStream" uid="uid://bde03ha0ji7gf" path="res://assets/sounds/ds_duck_hit.ogg" id="3_x537r"]
+[ext_resource type="PackedScene" uid="uid://daocapxoh2spv" path="res://components/shoot/GunShoot.tscn" id="4_x537r"]
+[ext_resource type="PackedScene" uid="uid://q3rkbfntt40e" path="res://components/factories/DuckFactory.tscn" id="5_k24pf"]
+[ext_resource type="Texture2D" uid="uid://b82cjjl0nd22u" path="res://assets/images/gun_sight.png" id="5_ygjfp"]
+[ext_resource type="PackedScene" uid="uid://cg2yfuromamw2" path="res://components/shoot/ShootBoard.tscn" id="9_cfq0f"]
+[ext_resource type="Texture2D" uid="uid://dbu77ebb1o28a" path="res://assets/images/hit_panel.png" id="10_pjux3"]
+[ext_resource type="Texture2D" uid="uid://dfpr4ob14htj6" path="res://assets/images/shot_panel.png" id="11_kp0ql"]
+[ext_resource type="Texture2D" uid="uid://cw84fxdls3ecd" path="res://assets/images/life_panel.png" id="12_08o8g"]
+[ext_resource type="Texture2D" uid="uid://mb71wo2u4sxe" path="res://assets/images/audio_icon.png" id="13_0cxu4"]
+[ext_resource type="Texture2D" uid="uid://8f3civgcv8dk" path="res://assets/images/but_exit.png" id="14_xnxdc"]
+[ext_resource type="AudioStream" uid="uid://dp68lk8xfximh" path="res://assets/sounds/ds_soundtrack.ogg" id="16_xnxdc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ehpd"]
+atlas = ExtResource("13_0cxu4")
+region = Rect2(1, 1, 61, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wjpf"]
+atlas = ExtResource("13_0cxu4")
+region = Rect2(64, 1, 61, 62)
+
+[node name="MainScene" type="Control" unique_id=2102917249 node_paths=PackedStringArray("player_gun", "audio_player")]
+clip_contents = true
+custom_minimum_size = Vector2(1024, 768)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_611at")
+player_gun = NodePath("Camera2D/PlayerGun")
+audio_player = NodePath("SoundEffectPlayer")
+gun_shoot_audio = ExtResource("2_u1u68")
+gun_shoot_duck_audio = ExtResource("3_x537r")
+gun_shoot_effect = ExtResource("4_x537r")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1352383920]
+limit_left = 0
+limit_top = 0
+limit_right = 1024
+limit_bottom = 768
+limit_smoothed = true
+editor_draw_limits = true
+
+[node name="Sky" type="Sprite2D" parent="Camera2D" unique_id=1379265532]
+texture = ExtResource("1_echbf")
+offset = Vector2(512, 384)
+
+[node name="Tree" type="Sprite2D" parent="Camera2D" unique_id=342179305]
+position = Vector2(231, 270)
+texture = ExtResource("2_c6dvc")
+
+[node name="Floor" type="Sprite2D" parent="Camera2D" unique_id=996436790]
+z_index = 1
+position = Vector2(511, 577)
+texture = ExtResource("2_ibiss")
+
+[node name="PlayerGun" type="Sprite2D" parent="Camera2D" unique_id=2027495312]
+z_index = 1000
+position = Vector2(503, 453)
+texture = ExtResource("5_ygjfp")
+
+[node name="UIControl" type="Control" parent="Camera2D" unique_id=624467815]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ShootBoard" parent="Camera2D/UIControl" unique_id=1999468389 instance=ExtResource("9_cfq0f")]
+z_index = 2
+layout_mode = 0
+offset_left = 111.0
+offset_top = 658.0
+offset_right = 111.0
+offset_bottom = 658.0
+
+[node name="DataBoard" type="TextureRect" parent="Camera2D/UIControl" unique_id=1238734648]
+z_index = 2
+layout_mode = 0
+offset_left = 217.0
+offset_top = 628.0
+offset_right = 767.0
+offset_bottom = 752.0
+texture = ExtResource("10_pjux3")
+
+[node name="FireBoard" type="TextureRect" parent="Camera2D/UIControl" unique_id=585820747]
+z_index = 2
+layout_mode = 0
+offset_left = 770.0
+offset_top = 593.0
+offset_right = 1021.0
+offset_bottom = 751.0
+texture = ExtResource("11_kp0ql")
+
+[node name="Decoration" type="TextureRect" parent="Camera2D/UIControl/FireBoard" unique_id=2065856101]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 139.0
+offset_bottom = 63.0
+texture = ExtResource("12_08o8g")
+
+[node name="ButtonSoundPlay" type="TextureButton" parent="Camera2D/UIControl" unique_id=1412754323]
+layout_mode = 0
+offset_left = 859.0
+offset_top = 27.0
+offset_right = 920.0
+offset_bottom = 89.0
+texture_normal = SubResource("AtlasTexture_0ehpd")
+
+[node name="ButtonSoundPlay2" type="TextureButton" parent="Camera2D/UIControl" unique_id=1817441609]
+visible = false
+layout_mode = 0
+offset_left = 859.0
+offset_top = 27.0
+offset_right = 920.0
+offset_bottom = 89.0
+texture_normal = SubResource("AtlasTexture_8wjpf")
+
+[node name="ButtonWinClose" type="TextureButton" parent="Camera2D/UIControl" unique_id=1454905893]
+layout_mode = 0
+offset_left = 931.0
+offset_top = 24.0
+offset_right = 994.0
+offset_bottom = 87.0
+texture_normal = ExtResource("14_xnxdc")
+
+[node name="DuckFactory" parent="." unique_id=2007714175 node_paths=PackedStringArray("duck_container") instance=ExtResource("5_k24pf")]
+duck_container = NodePath("../Camera2D")
+
+[node name="SoundEffectPlayer" type="AudioStreamPlayer" parent="." unique_id=100926106]
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1947172734]
+stream = ExtResource("16_xnxdc")
+autoplay = true
+
+[connection signal="button_down" from="Camera2D/UIControl/ButtonSoundPlay" to="." method="_on_button_sound_play_button_down"]
+[connection signal="button_down" from="Camera2D/UIControl/ButtonSoundPlay2" to="." method="_on_button_sound_play_2_button_down"]
+[connection signal="button_down" from="Camera2D/UIControl/ButtonWinClose" to="." method="_on_button_win_close_button_down"]

@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmh2t6u6yxjqs"]
+
+[ext_resource type="Script" uid="uid://ccl6smjtumpbv" path="res://scenes/SpalshScene.gd" id="1_sogvi"]
+[ext_resource type="Texture2D" uid="uid://ojwneur81yde" path="res://assets/images/bg_menu.jpg" id="2_j03qo"]
+[ext_resource type="Texture2D" uid="uid://h7msqdm7n455" path="res://assets/images/but_play.png" id="3_44xjy"]
+[ext_resource type="Texture2D" uid="uid://mb71wo2u4sxe" path="res://assets/images/audio_icon.png" id="4_4idov"]
+[ext_resource type="AudioStream" uid="uid://dp68lk8xfximh" path="res://assets/sounds/ds_soundtrack.ogg" id="4_nce4f"]
+[ext_resource type="Texture2D" uid="uid://8f3civgcv8dk" path="res://assets/images/but_exit.png" id="5_enerh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_44xjy"]
+font_size = 65
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02fqd"]
+atlas = ExtResource("4_4idov")
+region = Rect2(1, 1, 61, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enerh"]
+atlas = ExtResource("4_4idov")
+region = Rect2(64, 1, 61, 62)
+
+[node name="SpalshScene" type="Node2D"]
+script = ExtResource("1_sogvi")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 1024
+limit_bottom = 768
+
+[node name="Background" type="TextureRect" parent="Camera2D"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_j03qo")
+
+[node name="ButtonPlay" type="TextureButton" parent="Camera2D"]
+modulate = Color(1, 1, 1, 0.7019608)
+offset_left = 402.0
+offset_top = 562.0
+offset_right = 631.0
+offset_bottom = 688.0
+texture_normal = ExtResource("3_44xjy")
+
+[node name="Play" type="Label" parent="Camera2D/ButtonPlay"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 16.0
+offset_right = 193.0
+offset_bottom = 106.0
+text = "PLAY"
+label_settings = SubResource("LabelSettings_44xjy")
+
+[node name="ButtonSoundPlay" type="TextureButton" parent="Camera2D"]
+offset_left = 859.0
+offset_top = 27.0
+offset_right = 920.0
+offset_bottom = 89.0
+texture_normal = SubResource("AtlasTexture_02fqd")
+
+[node name="ButtonSoundPlay2" type="TextureButton" parent="Camera2D"]
+visible = false
+offset_left = 859.0
+offset_top = 27.0
+offset_right = 920.0
+offset_bottom = 89.0
+texture_normal = SubResource("AtlasTexture_enerh")
+
+[node name="ButtonWinClose" type="TextureButton" parent="Camera2D"]
+offset_left = 931.0
+offset_top = 24.0
+offset_right = 994.0
+offset_bottom = 87.0
+texture_normal = ExtResource("5_enerh")
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nce4f")
+autoplay = true
+parameters/looping = true
+
+[connection signal="button_down" from="Camera2D/ButtonPlay" to="." method="_on_button_play_button_down"]
+[connection signal="button_down" from="Camera2D/ButtonSoundPlay" to="." method="_on_button_sound_play_button_down"]
+[connection signal="button_down" from="Camera2D/ButtonSoundPlay2" to="." method="_on_button_sound_play_2_button_down"]
+[connection signal="button_down" from="Camera2D/ButtonWinClose" to="." method="_on_button_win_close_button_down"]

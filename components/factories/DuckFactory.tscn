@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://q3rkbfntt40e"]
+
+[ext_resource type="Script" uid="uid://dyo73k7uagw8a" path="res://components/factories/DuckFactory.gd" id="1_jkish"]
+
+[node name="DuckFactory" type="Node" unique_id=2007714175]
+script = ExtResource("1_jkish")
+
+[node name="Timer" type="Timer" parent="." unique_id=10859110]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
