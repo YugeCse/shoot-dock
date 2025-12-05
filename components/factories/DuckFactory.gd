@@ -16,5 +16,5 @@ func _on_timer_timeout() -> void:
 		duck = Duck1Component.create(position, false)
 	else: return
 	duck.speed = randf() * 70.0 + 50.0
-	duck.gravity = randf() * 200.0 + 9.8
+	duck.gravity = randf() * 140.0 + 60.0
 	duck_container.add_child(duck) #添加鸭子到对应的视图容器中

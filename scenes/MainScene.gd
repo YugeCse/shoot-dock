@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		if duck:
 			duck.hurt() #鸭子被击中
 			_play_gun_shoot_audio(true) #播放放枪声音
-			_show_gun_shoot_effect(player_gun.global_position) #显示放枪特效
+		_show_gun_shoot_effect(player_gun.global_position) #显示放枪特效
 	player_gun.position += move_dir * delta * player_gun_speed
 
 ## 查找被枪杀的鸭子
@@ -50,12 +50,11 @@ func _find_shoot_duck() -> BaseDuckComponent:
 		Rect2(shoot_position - shoot_radius/2.0, shoot_radius)
 	var duck_nodes = get_tree().get_nodes_in_group('Duck')
 	if len(duck_nodes) > 0:
-		queue_redraw()
-		for node in duck_nodes:
-			if node is BaseDuckComponent:
-				var rect = node.get_collision_rect()
-				if rect.intersects(shoot_rect):
-					return node
+		var ducks = duck_nodes.filter(func(v): \
+			return (v as BaseDuckComponent)\
+					.duck_state == Enums.DuckState.alive\
+				and v.get_collision_rect().intersects(shoot_rect))
+		if len(ducks) > 0: return ducks[0]
 	return null #没有任何鸭子被击中
 
 ## 播放放枪的声音[br]

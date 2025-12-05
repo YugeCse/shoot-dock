@@ -23,8 +23,17 @@ var audio_player: AudioStreamPlayer
 @export
 var duck_state: Enums.DuckState = Enums.DuckState.alive
 
+var _duck_dead_ms: float = 0.0
+
 func _ready() -> void:
 	var dir = [Vector2.LEFT, Vector2.RIGHT].pick_random()
+	var ui_half_width = Globals.UI_DESIGN_WIDTH / 2.0
+	if global_position.x >= 0.0\
+		and global_position.x < ui_half_width:
+		dir = Vector2.RIGHT
+	elif global_position.x > ui_half_width\
+		and global_position.x <= Globals.UI_DESIGN_HEIGHT:
+		dir = Vector2.LEFT
 	if dir == Vector2.RIGHT:
 		sprite.flip_h = true
 	direction = dir #更新方向
@@ -43,7 +52,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = speed * (-1 if direction == Vector2.LEFT else 1)
 	elif duck_state == Enums.DuckState.dead:
 		velocity.x = 0.0
-		velocity.y = 120.0
+		if _duck_dead_ms > 1.0:
+			_duck_dead_ms = 0.0
+		if _duck_dead_ms == 0.0:
+			velocity.y += 9.8
+		else:
+			_duck_dead_ms += delta #统计时间
 	else: 
 		velocity = Vector2.ZERO
 	move_and_collide(velocity * delta) #移动并处理
@@ -51,6 +65,7 @@ func _physics_process(delta: float) -> void:
 ## 被击中
 func hurt():
 	collision_shape.disabled = true
+	remove_child(collision_shape) #删除这个碰撞shape
 	duck_state = Enums.DuckState.hit
 	sprite.play("hit")
 	sprite.animation_finished.connect(dead)

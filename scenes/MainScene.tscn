@@ -64,6 +64,7 @@ position = Vector2(503, 453)
 texture = ExtResource("5_ygjfp")
 
 [node name="UIControl" type="Control" parent="Camera2D" unique_id=624467815]
+custom_minimum_size = Vector2(1024, 768)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -136,6 +137,7 @@ duck_container = NodePath("../Camera2D")
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1947172734]
 stream = ExtResource("16_xnxdc")
 autoplay = true
+parameters/looping = true
 
 [connection signal="button_down" from="Camera2D/UIControl/ButtonSoundPlay" to="." method="_on_button_sound_play_button_down"]
 [connection signal="button_down" from="Camera2D/UIControl/ButtonSoundPlay2" to="." method="_on_button_sound_play_2_button_down"]

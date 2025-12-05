@@ -19,6 +19,10 @@ run/main_scene="uid://cmh2t6u6yxjqs"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*uid://q0wdi1p2oh42"
+
 [display]
 
 window/size/viewport_width=1024
@@ -27,6 +31,10 @@ window/size/viewport_height=768
 [dotnet]
 
 project/assembly_name="ShootDock"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/git_bash_here/plugin.cfg")
 
 [global_group]
 
